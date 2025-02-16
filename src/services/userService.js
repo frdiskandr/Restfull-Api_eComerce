@@ -6,14 +6,14 @@ import prisma from "../app/database.js";
 
 const RegisterUser = async (req) => {
     const res = await Validate(UserSchema, req);
-    res.session = uuid();
     const user = await prisma.user.count({ where: { username: res.username } });
     if (user) throw new ResponseError(400, "User already exist");
 
     const userData = await prisma.user.create({
         data: {
             username: res.username,
-            password: res.password
+            password: res.password,
+            session: uuid(),
         },
         select: { id: true, username: true, session: true },
     });
