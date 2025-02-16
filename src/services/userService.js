@@ -11,7 +11,10 @@ const RegisterUser = async (req) => {
     if (user) throw new ResponseError(400, "User already exist");
 
     const userData = await prisma.user.create({
-        data: res,
+        data: {
+            username: res.username,
+            password: res.password
+        },
         select: { id: true, username: true, session: true },
     });
 
