@@ -9,6 +9,7 @@ const app = express();
 app.use(express.json());
 
 // routes public
+app.get("/", (req, res) => res.status(200).json({ message: "hello world" }));
 app.use(PublicRoute);
 app.use('/user', UserRoute);
 app.use('/store', ProductRoute);
