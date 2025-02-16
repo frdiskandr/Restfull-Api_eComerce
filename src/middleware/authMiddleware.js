@@ -12,12 +12,12 @@ const AuthMiddleware = async (req, res, next) => {
             username: username,
         },
         select: {
-            session: true,
+            token: true,
         },
     });
-    if (token === auth.session) {
+    if (token === auth.token) {
         next();
-    } else if (token !== auth.session) {
+    } else if (token !== auth.token) {
         res.status(401).json({ message: "Unauthorized" });
     }
 };

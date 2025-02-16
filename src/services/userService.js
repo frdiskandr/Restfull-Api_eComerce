@@ -13,9 +13,9 @@ const RegisterUser = async (req) => {
         data: {
             username: res.username,
             password: res.password,
-            session: uuid(),
+            token: uuid(),
         },
-        select: { id: true, username: true, session: true },
+        select: { id: true, username: true, token: true },
     });
 
     await prisma.profile.create({
@@ -45,8 +45,8 @@ const LoginUser = async (req) => {
     } else {
         const result = await prisma.user.update({
             where: { id: user.id },
-            data: { session: uuid() },
-            select: { id: true, username: true, session: true },
+            data: { token: uuid() },
+            select: { id: true, username: true, token: true },
         });
         return result;
     }
@@ -61,7 +61,7 @@ const GetUser = async (req) => {
         select:{
             id: true,
             username: true,
-            session: true,
+            token: true,
             Keranjang: true,
             Profile: true,
             Store: {
