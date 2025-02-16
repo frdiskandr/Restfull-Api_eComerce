@@ -18,15 +18,15 @@ model User {
   username  String     @unique @db.VarChar()
   password  String
   role      Boolean    @default(false)
-  token   String     @default("")
+  token     String     @default("")
   Profile   Profile?
   Keranjang Keranjang?
   Store     Store?
 }
 
 model Profile {
-  username    String @unique
-  user        User   @relation(fields: [username], references: [username])
+  username    String  @unique
+  user        User    @relation(fields: [username], references: [username])
   image       String? @default("")
   description String? @default("")
 }
@@ -40,19 +40,19 @@ model Keranjang {
 
 model poolKeranjangUser {
   id          Int       @unique @default(autoincrement())
-  keranjangId Int
+  keranjangId String
   productId   String
-  keranjang   Keranjang @relation(fields: [keranjangId], references: [id])
+  keranjang   Keranjang @relation(fields: [keranjangId], references: [userId])
   quantity    Int
 }
 
 model Product {
-  id          String   @unique @default(uuid())
+  id          String @unique @default(uuid())
   storeId     String
-  store       Store    @relation(fields: [storeId], references: [userId])
+  store       Store  @relation(fields: [storeId], references: [userId])
   name        String
   description String
-  price       Int @db.Integer
+  price       Int    @db.Integer
   stock       Int
 }
 
