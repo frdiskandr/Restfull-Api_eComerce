@@ -1,0 +1,65 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String     @unique @default(uuid())
+  username  String     @unique @db.VarChar()
+  password  String
+  role      Boolean    @default(false)
+  session   String     @default("")
+  Profile   Profile?
+  Keranjang Keranjang?
+  Store     Store?
+}
+
+model Profile {
+  username    String @unique
+  user        User   @relation(fields: [username], references: [username])
+  image       String? @default("")
+  description String? @default("")
+}
+
+model Keranjang {
+  id        Int                 @unique @default(autoincrement())
+  userId    String              @unique
+  User      User                @relation(fields: [userId], references: [id])
+  Keranjang poolKeranjangUser[]
+}
+
+model poolKeranjangUser {
+  id          Int       @unique @default(autoincrement())
+  keranjangId Int
+  productId   String
+  keranjang   Keranjang @relation(fields: [keranjangId], references: [id])
+  quantity    Int
+}
+
+model Product {
+  id          String   @unique @default(uuid())
+  storeId     String
+  store       Store    @relation(fields: [storeId], references: [userId])
+  name        String
+  description String
+  price       Int @db.Integer
+  stock       Int
+}
+
+model Store {
+  id      Int       @unique @default(autoincrement())
+  userId  String    @unique
+  name    String
+  user    User      @relation(fields: [userId], references: [id])
+  Product Product[]
+}
