@@ -1,4 +1,4 @@
-import keranjangService from "../services/keranjangService";
+import keranjangService from "../services/keranjangService.js";
 
 const GetKeranjang = async (req, res, next) => {
     try{
