@@ -1,6 +1,6 @@
 import { Router } from "express";
 import AuthMiddleware from "../middleware/authMiddleware.js";
-import keranjangController from "../controller/keranjangController";
+import keranjangController from "../controller/keranjangController.js";
 
 const KeranjangRoute = Router();
 KeranjangRoute.use(AuthMiddleware);
